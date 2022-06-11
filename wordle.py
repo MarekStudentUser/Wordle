@@ -28,7 +28,8 @@ kafelki_poz = []
 haslo_poz1 = []
 haslo_poz2 = []
 
-
+#haslo ktore ma zgadnać gracz,idk zmiencie to jakos najwyzej
+haslo='arrow'
 #funkcja, która rysuje miejsce na wpisywanie hasła, zależne od 2 danych dłguość hasła = ile; liczba prób = proby
 def rysuj_haslo(ile,proby):
     for i in range(proby):
@@ -108,7 +109,19 @@ def szukaj_znak(poz1,poz2):
                 if poz2 >= (kafelki_poz[j][1]) and (poz2 <= kafelki_poz[j][1] + 50):
                     if j == i:
                         return i
-                    
+#sprawdzenie                    
+def sprawdz(wpisane,slowo):
+    baza={z:slowo.count(z) for z in slowo}
+    kolory=[(255, 0, 0) for _ in range(len(wpisane))]
+    for (i,z) in enumerate(wpisane):
+        if wpisane[i]==slowo[i]:
+            kolory[i]=(0, 255, 0)
+            baza[z]-=1
+    for (i,z) in enumerate(wpisane):
+        if kolory[i] != (0, 255 , 0) and wpisane[i] in slowo and baza[z]>0:
+            kolory[i] = (255, 255, 0)
+            baza[z]-=1
+    return kolory 
 #funkcja wpisuje znak w okienko wyboru hasła lub usuwa znak albo wywołuje funkcję sprawdzenia hasła           
 def wpisz_znak(wpisane,poz,n):
     if n == 26:
@@ -119,7 +132,10 @@ def wpisz_znak(wpisane,poz,n):
             poz-=1
     elif n == 27:
         if len(wpisane)==5:
-            #sprawdz()
+            kolory = sprawdz(wpisane,haslo.upper())
+            for (i,z) in enumerate(wpisane):
+                lit = litera.render(z, True, kolory[i], None)
+                okno.blit(lit,haslo_poz1[poz-len(wpisane)+i])              
             wpisane = []
             return poz, wpisane
     else:
