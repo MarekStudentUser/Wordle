@@ -220,11 +220,11 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
 
             if 200 <= mouse[0] <= 250 and 350 <= mouse[1] <= 410:
-                wyborhasla == "4"
+                wyborhasla = "4"
             if 400 <= mouse[0] <= 450 and 350 <= mouse[1] <= 410:
-                wyborhasla == "5"
+                wyborhasla = "5"
             if 550 <= mouse[0] <= 600 and 350 <= mouse[1] <= 410:
-                wyborhasla == "6"
+                wyborhasla = "6"
 
     mouse = pygame.mouse.get_pos()
 
