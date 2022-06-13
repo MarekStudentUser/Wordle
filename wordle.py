@@ -19,6 +19,8 @@ tekst = czcionka.render("Jaką długość słowa wybierasz?", True, czarny)
 pozycja = tekst.get_rect(center=(400, 125))
 okno.blit(tekst, pozycja)
 
+
+#ustawienie kolorów
 color = (255,255,255)
 
 color_light = (170,170,170)
@@ -29,7 +31,6 @@ width = okno.get_width()
 
 height = okno.get_height()
 
-smallfont = pygame.font.SysFont('arial',60)
 
 przycisk4 = smallfont.render('4' , True , color)
 przycisk5 = smallfont.render('5' , True , color)
@@ -44,10 +45,6 @@ litera = pygame.font.SysFont('arial',40,True,False)
 czcionka = pygame.font.SysFont("arial", 60)
 smallfont = pygame.font.SysFont('arial',60)
 
-#ustawienie kolorów
-color = (255,255,255)
-color_light = (170,170,170)
-color_dark = (100,100,100)
 
 #w liście kafelki będą zapisane kolejne kafelki klawiatury
 kafelki = []
@@ -207,16 +204,12 @@ def komunikat_przegrana(haslo):
 
 
 okno.fill(tlo)
-#Weronika - wyświetlenie pytania o długość hasła + pętla 'while True' wyboru długości hasła
+tekst = czcionka.render("Jaką długość słowa wybierasz?", True, color_light)
+pozycja = tekst.get_rect(center=(400, 125))
+okno.blit(tekst, pozycja)
 
-okno.fill(tlo)
-#Marek - wyświetlenie pytania o liczbę prób + pętla while True wyboru liczby prób
-
-rysuj_haslo(wyborhasla,int(proby_max/wyborhasla)) #parametry to długość hasła i liczba prób (liczba kratek/długosc hasła)
-rysuj_klawiature()
-haslo=losuj_haslo(wyborhasla)
-haslo=haslo.upper()
 pygame.display.update()
+
 
 while True:
 
@@ -260,7 +253,52 @@ while True:
     if wyborhasla:
         break
     pygame.display.update()
+    
+wyborhasla=int(wyborhasla)     
+okno.fill(tlo)
+tekst = czcionka.render("Wybierz maksymalną liczbę prób", True, color_light)
+pozycja = tekst.get_rect(center=(400, 125))
+okno.blit(tekst, pozycja)
 
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if 200 <= mouse[0] <= 250 and 350 <= mouse[1] <= 410:
+                proby_max = wyborhasla*4
+            if 400 <= mouse[0] <= 450 and 350 <= mouse[1] <= 410:
+                proby_max = wyborhasla*5
+            if 550 <= mouse[0] <= 600 and 350 <= mouse[1] <= 410:
+                proby_max = wyborhasla*6
+
+    mouse = pygame.mouse.get_pos()
+    if 200 <= mouse[0] <= 250 and 350 <= mouse[1] <= 410:
+        pygame.draw.rect(okno,color_light,[200,350,60,60])
+    else:
+        pygame.draw.rect(okno,color_dark,[200,350,60,60])
+    if 375 <= mouse[0] <= 425 and 350 <= mouse[1] <= 410:
+        pygame.draw.rect(okno,color_light,[375,350,60,60])
+    else:
+        pygame.draw.rect(okno,color_dark,[375,350,60,60])
+    if 550 <= mouse[0] <= 600 and 350 <= mouse[1] <= 410:
+        pygame.draw.rect(okno,color_light,[550,350,60,60])
+    else:
+        pygame.draw.rect(okno,color_dark,[550,350,60,60])
+    okno.blit(przycisk4 , (213,345))
+    okno.blit(przycisk5 , (388,345))
+    okno.blit(przycisk6 , (563,345))
+    if proby_max:
+        break
+    pygame.display.update()
+
+okno.fill(tlo)       
+rysuj_haslo(wyborhasla,int(proby_max/wyborhasla)) #parametry to długość hasła i liczba prób (liczba kratek/długosc hasła)
+rysuj_klawiature()
+haslo=losuj_haslo(wyborhasla)
+haslo=haslo.upper()
+pygame.display.update()    
+    
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -270,7 +308,7 @@ while True:
                 poz1, poz2 = pygame.mouse.get_pos()
                 znak = szukaj_znak(poz1,poz2)
                 if znak:
-                    pozycja_wpisz,wpisane=wpisz_znak(wpisane,pozycja_wpisz,znak)
+                    pozycja_wpisz,wpisane=wpisz_znak(wyborhasla,wpisane,pozycja_wpisz,znak)
                     pygame.display.update()
                 if wygrana:
                     komunikat_wygrana(pozycja_wpisz/wyborhasla)
