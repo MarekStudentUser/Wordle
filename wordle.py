@@ -31,7 +31,7 @@ width = okno.get_width()
 
 height = okno.get_height()
 
-
+#przyciski do wyboru długości słów i liczby prób
 przycisk4 = smallfont.render('4' , True , color)
 przycisk5 = smallfont.render('5' , True , color)
 przycisk6 = smallfont.render('6' , True, color)
@@ -64,8 +64,6 @@ pozycja_wpisz=0
 wyborhasla=0
 wygrana=0
 wpisane=[]
-
-#przyciski do wyboru długości słów i liczby prób - Weronika
 
 
 
